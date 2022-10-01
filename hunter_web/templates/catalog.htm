@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>HUNTER - {{ schema }} Catalog</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+    <div role="main" class="container">
+        <h2>{{ schema }} Catalog</h2>
+        {% for id in ids %}
+            <div class="row">
+                <div class="col-sm">{{ id }}</div>
+                <div class="col-sm"><a href="/editor/{{ id }}"> Edit </a></div>
+                <div class="col-sm"><a href="/render/{{ id }}"> View </a></div>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

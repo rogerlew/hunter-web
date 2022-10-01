@@ -1,0 +1,38 @@
+
+{% import 'render/procedure/condition.j2' as condition_macro %}
+{% import 'render/procedure/action.j2' as action_macro %}
+
+
+<h4 style="margin-top: 1em;">Step {{ step.number }}. {{ step.description }}</h4>
+
+{% if step.purpose != ''%}
+<h4>Purpose</h4>
+<div>{{ step.purpose }}</div>
+{% endif %}
+
+{% if step.preconditions | length > 0 %}
+    <div style="margin: 1em;">
+        <h4>Verify the following preconditions:</h4>
+            {% for condition in step.preconditions %}
+                {{  condition_macro.render_condition(loop.index, condition)  }}
+            {% endfor %}
+    </div>
+{% endif %}
+
+{% if step.actions | length > 0 %}
+    <div style="margin: 1em;">
+        <h4>Perform the following Actions:</h4>
+            {% for action in step.actions %}
+                {{  action_macro.render_action(loop.index, action)  }}
+            {% endfor %}
+    </div>
+{% endif %}
+
+{% if step.postconditions | length > 0 %}
+    <div style="margin: 1em;">
+        <h4>Verify the following postconditions:</h4>
+            {% for condition in step.postconditions %}
+                {{  condition_macro.render_condition(loop.index, condition)  }}
+            {% endfor %}
+    </div>
+{% endif %}

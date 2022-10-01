@@ -1,0 +1,13 @@
+{% macro render_ref_path(ref_path) -%}
+    {{ ref_path.procedure_id }}, {{ ref_path.element_id }}
+{%- endmacro %}
+
+{% macro render(transition) -%}
+    {% if  transition.ro != none %}
+    If response was obtained <b>Go to</b> <i>{{ render_ref_path(transition.ro) }}</i>
+    {% endif %}
+
+    {% if  transition.rno != none %}
+    If response was <b>NOT</b> obtained <b>Go to</b> <i>{{ render_ref_path(transition.rno) }}</i>
+    {% endif %}
+{%- endmacro %}

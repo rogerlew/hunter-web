@@ -1,0 +1,32 @@
+{% import 'render/procedure/primitives.j2' as primitives %}
+{% import 'render/procedure/transition.j2' as transition %}
+
+{% macro render_condition(counter, condition) -%}
+    <div style="margin-left: 1em; margin-top: 1em; margin-bottom: 2em;">
+    {% if condition.def_id == 'condition' %}
+        <h5>{{ counter }}. {{ condition.description }} ({{ primitives.render(condition.primitives) }})</h5>
+        <p style="color:darkgrey;"><i>{{ condition.component_id }} == {{ condition.status }}</i></p>
+
+        {{ transition.render(condition.transition) }}
+
+    {% elif  condition.def_id == 'aggregate_conditions' %}
+      <h5>{{ counter }}. {{ condition.description }}</h5>
+        <p>{{ condition.logic_type }} of the following conditions should be met:</p>
+        {% for _condition in condition.conditions %}
+            {% set _counter = counter | string() + '.' + loop.index | string() %}
+            {{ render_condition(_counter, _condition) }}
+        {% endfor %}
+
+        <div class=".active">
+            <dl class="row">
+                {{ primitives.render(condition.primitives) }}
+                {{ transition.render(condition.transition) }}
+            </dl>
+        </div>
+
+    {% elif  condition.def_id == 'proxy_id' %}
+        <div class="warning">Not Implemented</div>
+    {% endif %}
+    </div>
+{%- endmacro %}
+

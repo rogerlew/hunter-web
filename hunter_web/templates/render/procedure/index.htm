@@ -1,0 +1,25 @@
+{% extends "render/_base.htm" %}
+{% block title %}{{ obj.procedure_id }}{% endblock %}
+{% block body_content %}
+    <h2>{{ obj.procedure_id }}</h2>
+
+    <dl class="row">
+        <dt class="col-sm-3">Authors</dt>
+        <dd class="col-sm-9">{{ ', '.join(obj.authors) }}</dd>
+
+        <dt class="col-sm-3">Plant</dt>
+        <dd class="col-sm-9">{{ obj.plant }}</dd>
+
+        <dt class="col-sm-3">Updated</dt>
+        <dd class="col-sm-9">{{ obj.updated }}</dd>
+
+        <dt class="col-sm-3">Procedure Type</dt>
+        <dd class="col-sm-9">{{ obj.type }}</dd>
+    </dl>
+
+    <h4>Purpose</h4>
+    <div>{{ obj.purpose }}</div>
+    {% for step in obj.steps %}
+        {% include("render/procedure/step.htm") %}
+    {% endfor %}
+{% endblock %}

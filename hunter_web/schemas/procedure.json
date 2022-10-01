@@ -1,0 +1,435 @@
+{
+  "title": "Procedure",
+  "type": "object",
+  "id": "procedure",
+  "properties": {
+    "def_id": {
+      "type": "string",
+      "enum": [
+        "procedure"
+      ],
+      "options": {
+        "hidden": true
+      }
+    },
+    "authors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "options": {
+        "collapsed": true
+      },
+      "propertyOrder": 0
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "OP",
+        "AOP",
+        "EOP",
+        "GP"
+      ],
+      "propertyOrder": 1
+    },
+    "procedure_id": {
+      "type": "string",
+      "format": "text",
+      "fieldType": "text",
+      "isSearchable": false,
+      "propertyOrder": 2
+    },
+    "updated": {
+      "type": "string",
+      "format": "date",
+      "fieldType": "text",
+      "isSearchable": false,
+      "propertyOrder": 3,
+      "options": {
+        "grid_columns": 3
+      }
+    },
+    "plant": {
+      "type": "string",
+      "format": "text",
+      "fieldType": "text",
+      "isSearchable": false,
+      "propertyOrder": 4
+    },
+    "purpose": {
+      "type": "string",
+      "format": "text",
+      "fieldType": "text",
+      "isSearchable": false,
+      "propertyOrder": 5
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "headerTemplate": "{{i}} - {{self.description}}",
+        "$ref": "#/definitions/step"
+      },
+      "options": {
+        "collapsed": true
+      },
+      "propertyOrder": 6
+    }
+  },
+  "definitions": {
+    "person": {
+      "type": "object",
+      "title": "Person",
+      "properties": {
+        "name": {
+          "type": "string",
+          "format": "text",
+          "fieldType": "text"
+        }
+      }
+    },
+    "step": {
+      "type": "object",
+      "title": "Step",
+      "properties": {
+        "number": {
+          "type": "string",
+          "format": "text",
+          "fieldType": "text",
+          "propertyOrder": 1
+        },
+        "description": {
+          "type": "string",
+          "format": "text",
+          "fieldType": "text",
+          "propertyOrder": 2
+        },
+        "purpose": {
+          "type": "string",
+          "format": "text",
+          "fieldType": "text",
+          "isSearchable": false,
+          "propertyOrder": 3
+        },
+        "preconditions": {
+          "$ref": "#/definitions/conditions_list",
+          "propertyOrder": 4
+        },
+        "actions": {
+          "$ref": "#/definitions/action_list",
+          "propertyOrder": 5
+        },
+        "postconditions": {
+          "$ref": "#/definitions/conditions_list",
+          "propertyOrder": 6
+        },
+        "substeps": {
+          "type": "array",
+          "items": {
+            "headerTemplate": "{{i}} - {{self.description}}",
+            "$ref": "#/definitions/step"
+          },
+          "options": {
+            "collapsed": true
+          },
+          "propertyOrder": 7
+        },
+        "transition": {
+          "$ref": "#/definitions/transition",
+          "propertyOrder": 8
+        },
+        "primitives": {
+          "$ref": "#/definitions/primitive_list",
+          "propertyOrder": 9
+        }
+      }
+    },
+    "proxy_id": {
+      "type": "object",
+      "title": "Proxy ID",
+      "properties": {
+        "def_id": {
+          "type": "proxy_id",
+          "enum": [
+            "proxy_id"
+          ],
+          "options": {
+            "hidden": true
+          }
+        },
+        "proxy_id": {
+          "type": "string",
+          "format": "text",
+          "fieldType": "text"
+        }
+      },
+      "required": [
+        "def_id",
+        "proxy_id"
+      ],
+      "additionalProperties": false
+    },
+    "transition": {
+      "type": "object",
+      "title": "Transition",
+      "properties": {
+        "def_id": {
+          "type": "string",
+          "enum": [
+            "transition"
+          ],
+          "options": {
+            "hidden": true
+          }
+        },
+        "ro":
+        {
+          "title": " RO Reference Path",
+          "$ref": "#/definitions/reference_path"
+        },
+        "rno": {
+          "title": " RNO Reference Path",
+          "$ref": "#/definitions/reference_path"
+        }
+      }
+    },
+    "reference_path": {
+      "type": ["object", "null"],
+      "title": "Element Reference",
+      "properties": {
+        "procedure_id": {
+          "type": "string",
+          "format": "text",
+          "fieldType": "text",
+          "propertyOrder": 1
+        },
+        "element_id": {
+          "type": "string",
+          "format": "text",
+          "fieldType": "text",
+          "propertyOrder": 1
+        }
+      }
+    },
+    "condition": {
+      "type": "object",
+      "title": "Condition",
+      "properties": {
+        "def_id": {
+          "type": "string",
+          "enum": [
+            "condition"
+          ],
+          "options": {
+            "hidden": true
+          }
+        },
+        "description": {
+          "type": "string",
+          "format": "text",
+          "fieldType": "text",
+          "propertyOrder": 1
+        },
+        "component_id": {
+          "type": "string",
+          "format": "text",
+          "fieldType": "text",
+          "propertyOrder": 2
+        },
+        "status": {
+          "type": "string",
+          "format": "text",
+          "fieldType": "text",
+          "propertyOrder": 3
+        },
+        "primitives": {
+          "$ref": "#/definitions/primitive_list",
+          "propertyOrder": 4
+        },
+        "transition": {
+          "$ref": "#/definitions/transition",
+          "propertyOrder": 9
+        }
+      },
+      "required": [
+        "def_id",
+        "description",
+        "component_id",
+        "status",
+        "primitives",
+        "transition"
+      ],
+      "additionalProperties": false
+    },
+    "aggregate_conditions": {
+      "type": "object",
+      "title": "Aggregate Conditions",
+      "properties": {
+        "def_id": {
+          "type": "string",
+          "enum": [
+            "aggregate_conditions"
+          ],
+          "options": {
+            "hidden": true
+          }
+        },
+        "description": {
+          "type": "string",
+          "format": "text",
+          "fieldType": "text",
+          "propertyOrder": 1
+        },
+        "logic_type": {
+          "enum": [
+            "ANY",
+            "ALL"
+          ],
+          "type": "string",
+          "fieldType": "selectlist",
+          "displayType": "select",
+          "isSearchable": false,
+          "propertyOrder": 2
+        },
+        "conditions": {
+          "$ref": "#/definitions/conditions_list",
+          "propertyOrder": 3
+        },
+        "transition": {
+          "$ref": "#/definitions/transition",
+          "propertyOrder": 4
+        },
+        "primitives": {
+          "$ref": "#/definitions/primitive_list",
+          "propertyOrder": 5
+        }
+      },
+      "required": [
+        "def_id",
+        "description",
+        "logic_type",
+        "conditions",
+        "primitives",
+        "transition"
+      ],
+      "additionalProperties": false
+    },
+    "conditions_list": {
+      "type": "array",
+      "items": {
+        "headerTemplate": "{{self.description}}",
+        "oneOf": [
+          {
+            "$ref": "#/definitions/condition"
+          },
+          {
+            "$ref": "#/definitions/aggregate_conditions"
+          },
+          {
+            "$ref": "#/definitions/proxy_id"
+          }
+        ]
+      },
+      "options": {
+        "collapsed": true
+      },
+      "propertyOrder": 7
+    },
+    "primitive": {
+      "enum": [
+        "Ac - Action - control room",
+        "Af - Action - field",
+        "Cc - Checking - control room",
+        "Cf - Checking - field",
+        "Rc - Retrieval - control room",
+        "Rf - Retrieval - field",
+        "ICp - Instruction Communication - produce written or verbal",
+        "ICr - Instruction Communication - receive written or verbal",
+        "Sc - Selection - control room",
+        "Sf - Selection - field",
+        "Dp - Decision - based on procedures",
+        "Dw - Decision - without procedures"
+      ],
+      "type": "string",
+      "fieldType": "selectlist",
+      "displayType": "select",
+      "isSearchable": false,
+      "propertyOrder": 3
+    },
+    "primitive_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/primitive"
+      },
+      "options": {
+        "collapsed": true
+      }
+    },
+    "action": {
+      "type": "object",
+      "title": "Action",
+      "properties":
+      {
+        "def_id": {
+          "type": "string",
+          "enum": [
+            "action"
+          ],
+          "options": {
+            "hidden": true
+          }
+        },
+        "description": {
+          "type": "string",
+          "format": "text",
+          "fieldType": "text",
+          "propertyOrder": 1
+        },
+        "component_id": {
+          "type": "string",
+          "format": "text",
+          "fieldType": "text",
+          "propertyOrder": 2
+        },
+        "target": {
+          "type": "string",
+          "format": "text",
+          "fieldType": "text",
+          "propertyOrder": 2
+        },
+        "transition": {
+          "$ref": "#/definitions/transition",
+          "propertyOrder": 3
+        },
+        "primitives": {
+          "$ref": "#/definitions/primitive_list",
+          "propertyOrder": 4
+        }
+      },
+      "required": [
+        "def_id",
+        "description",
+        "component_id",
+        "target",
+        "primitives"
+      ],
+      "additionalProperties": false
+    },
+    "action_list": {
+      "type": "array",
+      "items": {
+        "headerTemplate": "{{self.description}}",
+        "oneOf" : [
+          {
+            "$ref": "#/definitions/action"
+          },
+          {
+            "$ref": "#/definitions/proxy_id"
+          }
+        ]
+      },
+      "options": {
+        "collapsed": true
+      }
+    }
+  }
+}

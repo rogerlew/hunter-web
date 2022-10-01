@@ -1,0 +1,17 @@
+{% import 'render/procedure/primitives.j2' as primitives %}
+{% import 'render/procedure/transition.j2' as transition %}
+
+{% macro render_action(counter, action) -%}
+    <div style="margin-left: 1em; margin-top: 1em; margin-bottom: 2em;">
+    {% if action.def_id == 'action' %}
+        <h5>{{ counter }}. {{ action.description }} ({{ primitives.render(action.primitives) }})</h5>
+        <p style="color:darkgrey;"><i>{{ action.component_id }} == {{ action.target }}</i></p>
+
+        {{ transition.render(action.transition) }}
+
+    {% elif  action.def_id == 'proxy_id' %}
+        <div class="warning">Not Implemented</div>
+    {% endif %}
+    </div>
+{%- endmacro %}
+

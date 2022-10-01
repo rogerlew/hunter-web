@@ -1,0 +1,173 @@
+{
+  "def_id": "procedure",
+  "authors": [
+    "Roger Lew",
+    "Kenny Bangudu",
+    "Jooyoung Park",
+    "Bumjun Park"
+  ],
+  "type": "OP",
+  "procedure_id": "OP-001 Startup",
+  "updated": "2022-09-30",
+  "plant": "Rancor (JabbaPy)",
+  "purpose": "Startup from cold shutdown",
+  "steps": [
+    {
+      "number": "1",
+      "description": "Verify Reactor Shutdown",
+      "purpose": "",
+      "preconditions": [
+        {
+          "def_id": "condition",
+          "description": "All Rods Are Down",
+          "component_id": "AllRodsDown",
+          "status": "True",
+          "primitives": [
+            "Rc - Retrieval - control room"
+          ],
+          "transition": {
+            "def_id": "transition",
+            "ro": null,
+            "rno": null
+          }
+        },
+        {
+          "def_id": "condition",
+          "description": "Core Temperature is Low",
+          "component_id": "CoreLowTemp",
+          "status": "True",
+          "primitives": [
+            "Rc - Retrieval - control room"
+          ],
+          "transition": {
+            "def_id": "transition",
+            "ro": null,
+            "rno": null
+          }
+        },
+        {
+          "def_id": "condition",
+          "description": "The RC Flow Low Annunciator Light is ON",
+          "component_id": "RcsLowFlow",
+          "status": "True",
+          "primitives": [
+            "Rc - Retrieval - control room"
+          ],
+          "transition": {
+            "def_id": "transition",
+            "ro": null,
+            "rno": null
+          }
+        },
+        {
+          "def_id": "condition",
+          "description": "Turbine is Tripped",
+          "component_id": "TurbineTrip",
+          "status": "True",
+          "primitives": [
+            "Rc - Retrieval - control room"
+          ],
+          "transition": {
+            "def_id": "transition",
+            "ro": null,
+            "rno": null
+          }
+        },
+        {
+          "def_id": "aggregate_conditions",
+          "description": "Verify RCS Pumps are Off",
+          "logic_type": "ALL",
+          "conditions": [
+            {
+              "def_id": "condition",
+              "description": "Verify Pump A is Off",
+              "component_id": "RecircPumpA",
+              "status": "False",
+              "primitives": [
+                "Rc - Retrieval - control room"
+              ],
+              "transition": {
+                "def_id": "transition",
+                "ro": null,
+                "rno": null
+              }
+            },
+            {
+              "def_id": "condition",
+              "description": "Verify Pump B is Off",
+              "component_id": "RecircPumpB",
+              "status": "False",
+              "primitives": [
+                "Rc - Retrieval - control room"
+              ],
+              "transition": {
+                "def_id": "transition",
+                "ro": null,
+                "rno": null
+              }
+            }
+          ],
+          "transition": {
+            "def_id": "transition",
+            "ro": null,
+            "rno": null
+          },
+          "primitives": []
+        }
+      ],
+      "actions": [],
+      "postconditions": [],
+      "substeps": [],
+      "transition": {
+        "def_id": "transition",
+        "ro": null,
+        "rno": null
+      },
+      "primitives": []
+    },
+    {
+      "number": "1",
+      "description": "Start Primary Cooling Flow",
+      "purpose": "Providing adequate cooling flow to the reactor is essential to keep the reactor core from overheating. Reactor primary cooling flow should be maintained at a rate of 1000 KPPH (thousand pounds per hour) or greater. Rancor is a Generation 3+ Small Modular Reactor with advanced passively safe cooling. As the core temperature rises the passive re-circulation becomes more efficient.Rancor is equipped with two Recirculating Coolant Pumps. Each pump consumes 300 kW of electricity and provides a nominal cooling flow of 2400 KPPH. The two reactor pumps should be running during reactor startup.",
+      "preconditions": [],
+      "actions": [
+        {
+          "def_id": "action",
+          "description": "Start Reactor Coolant Pump A",
+          "component_id": "RecircPumpA",
+          "target": "True",
+          "transition": {
+            "def_id": "transition",
+            "ro": null,
+            "rno": null
+          },
+          "primitives": [
+            "Ac - Action - control room"
+          ]
+        },
+        {
+          "def_id": "action",
+          "description": "Start Reactor Coolant Pump B",
+          "component_id": "RecircPumpB",
+          "target": "True",
+          "transition": {
+            "def_id": "transition",
+            "ro": null,
+            "rno": null
+          },
+          "primitives": [
+            "Ac - Action - control room"
+          ]
+        }
+      ],
+      "postconditions": [],
+      "substeps": [],
+      "transition": {
+        "def_id": "transition",
+        "ro": null,
+        "rno": null
+      },
+      "primitives": []
+    }
+  ]
+}

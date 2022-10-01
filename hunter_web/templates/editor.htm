@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>HUNTER - {{ schema }} editor</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <div class="form-group"></div>
+    <form action="/editor-submit/{{ schema }}/{{ id }}" method="post">
+        <input id="input" type="hidden" name="json">
+        <input id="id" type="hidden" value="{{ id }}">
+        <div id='editor-container'></div>
+        <input id="submit" class="btn btn-primary" width="100" type="submit" value="Save" />
+    </form>
+    <br>
+    <pre id="get-params" class="hidden"></pre>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@json-editor/json-editor@latest/dist/jsoneditor.min.js"></script>
+<script>
+  var params = {}
+  for (const [key, value] of new URLSearchParams(window.location.search).entries()) {
+    params[key] = value
+    console.log(key, value)
+  }
+  document.querySelector('#get-params').textContent = JSON.stringify(params, null, 2)
+
+  var schema = {{ schema_js  | safe }};
+
+  var config = {
+    use_name_attributes: false,
+    theme: 'bootstrap4',
+    ajax: true,
+    disable_edit_json: true,
+    disable_properties: true,
+    schema:  schema
+  }
+
+  var startval = {{ startval | safe }};
+
+  if (startval !== null) {
+      config['startval'] = startval;
+  }
+
+  var editor = new JSONEditor(document.querySelector('#editor-container'), config)
+
+  editor.on('change', function () {
+    document.querySelector('#input').value = JSON.stringify(editor.getValue())
+  })
+</script>
+</body>
+</html>
